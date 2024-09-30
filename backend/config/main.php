@@ -37,14 +37,21 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
-        /*
         'urlManager' => [
             'enablePrettyUrl' => true,
-            'showScriptName' => false,
+            'enableStrictParsing' => false,
+            'showScriptName' => true,
             'rules' => [
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => 'loanAplication',
+                    'extraPatterns' => [
+                        'GET processor' => 'processor',
+                        'POST requests' => 'requests',
+                    ],
+                ],
             ],
         ],
-        */
     ],
     'params' => $params,
 ];
