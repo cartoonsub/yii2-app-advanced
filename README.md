@@ -2,10 +2,31 @@
     <a href="https://github.com/yiisoft" target="_blank">
         <img src="https://avatars0.githubusercontent.com/u/993323" height="100px">
     </a>
-    <h1 align="center">Yii 2 Advanced Project Template</h1>
+    <h1 align="center">Yii 2 - API для подачи и обработки заявки на займ - тестовое задание</h1>
     <br>
 </p>
 
+<p>
+    Тестовое задание не завершено.<br>
+    todo:
+    - поменять apache на nginx
+    - решить вопрос для 'processor':
+    --- !!! = Этот эндпоинт может быть запрошен несколько раз одновременно. 
+    --- !!! = Заявки одного пользователя могут обрабатываться параллельно.
+
+    Запуск согласно Yii advanced:
+    https://www.yiiframework.com/extension/yiisoft/yii2-app-advanced/doc/guide/2.0/en/start-installation
+    - docker-compose run --rm backend composer install
+    - docker-compose run --rm backend php /app/init
+    - environments\dev\common\config\main-local.php "'dsn' => 'pgsql:host=localhost;dbname=yii2advanced',"
+    - docker-compose up -d
+    - docker-compose run --rm backend yii migrate
+    - frontend: http://127.0.0.1:20080
+    - backend: http://127.0.0.1:21080
+</p>
+<br>
+<br>
+<br>
 Yii 2 Advanced Project Template is a skeleton [Yii 2](https://www.yiiframework.com/) application best for
 developing complex Web applications with multiple tiers.
 
