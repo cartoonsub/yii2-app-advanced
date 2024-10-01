@@ -4,6 +4,7 @@ namespace app\models;
 
 use Yii;
 use yii\db\ActiveRecord;
+use yii\helpers\VarDumper;
 
 class LoanAplication extends ActiveRecord
 {
@@ -42,9 +43,65 @@ class LoanAplication extends ActiveRecord
         ];
     }
 
-    public function aplicationProcess(int $delay): bool
+    public function aplicationProcess(int $delay)
     {
+        $excldedUsers = $this->getUsersWithAprrovedLoan();
+        $aplications = LoanAplication::find()
+                     ->where(['not in', 'user_id', $excldedUsers])
+                     ->all();
         
+        if (empty($aplications)) {
+            return false;
+        }
+
+        $aplicationsByUser = $this->groupByUser($aplications);
+        foreach ($aplicationsByUser as $userId => $aplications) {
+            $flag = false;
+
+            foreach ($aplications as $aplication) {
+                sleep($delay);
+
+                $aplication->status = 2;
+                if ($flag === true) {
+                    $aplication->save();
+                    continue;
+                }
+
+                if ($this->aproveAplication($aplication) === true) {
+                    $flag = true;
+                    $aplication->status = 1;
+                }
+
+                $aplication->save();
+            }
+        }
+
         return true;
+    }
+
+    private function getUsersWithAprrovedLoan(): array
+    {
+        $users = LoanAplication::find()
+            ->select('user_id')
+            ->where(['status' => 1])
+            ->column();
+
+        return $users;
+    }
+
+    private function groupByUser(array $aplications): array
+    {
+        $result = [];
+        foreach ($aplications as $aplication) {
+            $userId = $aplication->user_id;
+            $result[$userId][] = $aplication;
+        }
+
+        return $result;
+    }
+    
+    private function aproveAplication(LoanAplication $aplication): bool
+    {
+        return random_int(1, 10) === 1;
     }
 }
