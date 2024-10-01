@@ -45,15 +45,19 @@ class LoanAplication extends ActiveRecord
         ];
     }
 
-    public function aplicationProcess(int $delay)
+    public function aplicationProcess(int $delay): array
     {
+        $result = [
+            'result' => false,
+        ];
+
         $excldedUsers = $this->getUsersWithAprrovedLoan();
         $aplications = LoanAplication::find()
                      ->where(['not in', 'user_id', $excldedUsers])
                      ->all();
         
         if (empty($aplications)) {
-            return false;
+            return $result;
         }
 
         $aplicationsByUser = $this->groupByUser($aplications);
@@ -78,7 +82,8 @@ class LoanAplication extends ActiveRecord
             }
         }
 
-        return true;
+        $result['result'] = true;
+        return $result;
     }
 
     private function getUsersWithAprrovedLoan(): array
@@ -114,19 +119,16 @@ class LoanAplication extends ActiveRecord
         ];
 
         if ($this->checkUser($data['user_id']) === false) {
-            Yii::$app->response->statusCode = 400;
             $result['message'] = 'User not found';
             return $result;
         }
 
         if ($this->checkAproved($data['user_id']) === false) {
-            Yii::$app->response->statusCode = 400;
             $result['message'] = 'User has approved request';
             return $result;
         }
 
         if ($this->checkDuplicate($data) === false) {
-            Yii::$app->response->statusCode = 400;
             $result['message'] = 'Duplicate request';
             return $result;
         }
@@ -139,7 +141,6 @@ class LoanAplication extends ActiveRecord
 
         if ($LoanAplication->save()) {
             $result['result'] = true;
-            $result['id'] = $LoanAplication->id;
         }
         
         return $result;
@@ -169,7 +170,7 @@ class LoanAplication extends ActiveRecord
         $approved = LoanAplication::find()
             ->where([
                 'user_id' => $user_id,
-                'status' => StatusEnum::APPROVED->value,
+                'status'  => StatusEnum::APPROVED->value,
             ])
             ->one();
 

@@ -25,18 +25,18 @@ class LoanAplicationController extends ActiveController
         return $actions;
     }
 
-    public function actionProcessor($delay = 5): array
+    // http://localhost:21080/index.php/loan-aplication/processor?delay=5
+    public function actionProcessor(): array
     {
         $delay = Yii::$app->request->get('delay', 5);
-        return LoanAplication::find()->all();
 
         $Model = new LoanAplication();
-        if ($Model->aplicationProcess($delay) === false) {
+        $result = $Model->aplicationProcess($delay);
+        if ($result === false) {
             Yii::$app->response->statusCode = 502;
-            return ['result' => false];
         }
 
-        return ['result' => true];
+        return $result;
     }
 
     // http://localhost:21080/index.php/loan-aplication/requests?user_id=1&amount=3000&term=30
@@ -53,6 +53,11 @@ class LoanAplicationController extends ActiveController
         }
 
         $request = (array)Yii::$app->request->post();
-        return $this->requestProcessing($request);
+        $result = $Model->requestProcessing($request);
+        if ($result === false) {
+            Yii::$app->response->statusCode = 400;
+        }
+
+        return $result;
     }
 }
