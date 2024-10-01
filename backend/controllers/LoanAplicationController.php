@@ -7,6 +7,7 @@ use common\models\User;
 use yii\web\Controller;
 use yii\data\Pagination;
 use yii\helpers\VarDumper;
+use backend\Enums\StatusEnum;
 use app\models\LoanAplication;
 use yii\rest\ActiveController;
 
@@ -53,7 +54,6 @@ class LoanAplicationController extends ActiveController
         $loanRequest->user_id = $request['user_id'];
         $loanRequest->amount = $request['amount'];
         $loanRequest->term = $request['term'];
-        $loanRequest->status = 1;
 
         if ($this->checkUser($loanRequest->user_id) === false) {
             Yii::$app->response->statusCode = 400;
@@ -115,7 +115,7 @@ class LoanAplicationController extends ActiveController
         $approved = LoanAplication::find()
             ->where([
                 'user_id' => $loanRequest->user_id,
-                'status' => 1,
+                'status' => StatusEnum::APPROVED->value,
             ])
             ->one();
 

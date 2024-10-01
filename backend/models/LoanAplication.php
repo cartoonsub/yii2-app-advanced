@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use backend\Enums\StatusEnum;
 use Yii;
 use yii\db\ActiveRecord;
 use yii\helpers\VarDumper;
@@ -61,15 +62,15 @@ class LoanAplication extends ActiveRecord
             foreach ($aplications as $aplication) {
                 sleep($delay);
 
-                $aplication->status = 2;
+                $aplication->status = StatusEnum::DECLINED->value;
                 if ($flag === true) {
                     $aplication->save();
                     continue;
                 }
 
-                if ($this->aproveAplication($aplication) === true) {
+                if ($this->aproveAplication() === true) {
                     $flag = true;
-                    $aplication->status = 1;
+                    $aplication->status = StatusEnum::APPROVED->value;
                 }
 
                 $aplication->save();
@@ -83,7 +84,7 @@ class LoanAplication extends ActiveRecord
     {
         $users = LoanAplication::find()
             ->select('user_id')
-            ->where(['status' => 1])
+            ->where(['status' => StatusEnum::APPROVED->value])
             ->column();
 
         return $users;
@@ -100,7 +101,7 @@ class LoanAplication extends ActiveRecord
         return $result;
     }
     
-    private function aproveAplication(LoanAplication $aplication): bool
+    private function aproveAplication(): bool
     {
         return random_int(1, 10) === 1;
     }
