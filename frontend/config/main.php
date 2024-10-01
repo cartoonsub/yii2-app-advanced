@@ -9,11 +9,13 @@ $params = array_merge(
 return [
     'id' => 'app-frontend',
     'basePath' => dirname(__DIR__),
-    'bootstrap' => ['log'],
     'controllerNamespace' => 'frontend\controllers',
     'components' => [
         'request' => [
             'csrfParam' => '_csrf-frontend',
+            'parsers' => [
+               'application/json' => 'yii\web\JsonParser',
+            ]
         ],
         'user' => [
             'identityClass' => 'common\models\User',
@@ -36,14 +38,22 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
-        /*
+        
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
+            'enableStrictParsing' => false,
+            // 'rules' => [
+            //     'POST /requests' => 'loan/request', // Маршрут для подачи заявки на займ
+            //     'GET /processor' => 'loan/processor', // Маршрут для обработки заявок
+            //     'defaultRoute' => 'main/index',
+            // ],
             'rules' => [
+                ['class' => 'yii\rest\UrlRule', 'controller' => 'loan'],
             ],
         ],
-        */
+       
     ],
+
     'params' => $params,
 ];

@@ -15,6 +15,7 @@ use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
+use app\models\Loan;
 
 /**
  * Site controller
@@ -143,7 +144,9 @@ class SiteController extends Controller
      */
     public function actionAbout()
     {
-        return $this->render('about');
+        return $this->render('about', [
+            'message' => 'This is the About page. So do you like it?',
+        ]);
     }
 
     /**
@@ -255,5 +258,26 @@ class SiteController extends Controller
         return $this->render('resendVerificationEmail', [
             'model' => $model
         ]);
+    }
+
+    public function actionLoan()
+    {
+        $model = new Loan();
+        // $country = Country::findOne('US');
+        // echo $country->name;
+        $countries = Loan::find()->orderBy('name')->all();
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            // данные в $model удачно проверены
+
+            // делаем что-то полезное с $model ...
+ 
+            return $this->render('entry-confirm', ['model' => $model]);
+        } else {
+            // либо страница отображается первый раз, либо есть ошибка в данных
+            return $this->render('entry', [
+                'model' => $model,
+                'countries' => $countries,
+            ]);
+        }
     }
 }
