@@ -2652,6 +2652,7 @@
         },
         {
             "name": "nikic/php-parser",
+<<<<<<< HEAD
             "version": "v5.3.0",
             "source": {
                 "type": "git",
@@ -2662,6 +2663,18 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/3abf7425cd284141dc5d8d14a9ee444de3345d1a",
                 "reference": "3abf7425cd284141dc5d8d14a9ee444de3345d1a",
+=======
+            "version": "v5.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nikic/PHP-Parser.git",
+                "reference": "23c79fbbfb725fb92af9bcf41065c8e9a0d49ddb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/23c79fbbfb725fb92af9bcf41065c8e9a0d49ddb",
+                "reference": "23c79fbbfb725fb92af9bcf41065c8e9a0d49ddb",
+>>>>>>> 7f8152e5f2d7123a2eb440647058be7def760ceb
                 "shasum": ""
             },
             "require": {
@@ -2704,9 +2717,15 @@
             ],
             "support": {
                 "issues": "https://github.com/nikic/PHP-Parser/issues",
+<<<<<<< HEAD
                 "source": "https://github.com/nikic/PHP-Parser/tree/v5.3.0"
             },
             "time": "2024-09-29T13:56:26+00:00"
+=======
+                "source": "https://github.com/nikic/PHP-Parser/tree/v5.2.0"
+            },
+            "time": "2024-09-15T16:40:33+00:00"
+>>>>>>> 7f8152e5f2d7123a2eb440647058be7def760ceb
         },
         {
             "name": "phar-io/manifest",
@@ -3404,12 +3423,21 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/bobthecow/psysh.git",
+<<<<<<< HEAD
                 "reference": "5c196904f494bb97ad9935fe4b2cb509857bbe5a"
             },
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/bobthecow/psysh/zipball/5c196904f494bb97ad9935fe4b2cb509857bbe5a",
                 "reference": "5c196904f494bb97ad9935fe4b2cb509857bbe5a",
+=======
+                "reference": "7ad43b6a24177dd844a4ddf8a1da8bdff60c4110"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/bobthecow/psysh/zipball/7ad43b6a24177dd844a4ddf8a1da8bdff60c4110",
+                "reference": "7ad43b6a24177dd844a4ddf8a1da8bdff60c4110",
+>>>>>>> 7f8152e5f2d7123a2eb440647058be7def760ceb
                 "shasum": ""
             },
             "require": {
@@ -3476,7 +3504,11 @@
                 "issues": "https://github.com/bobthecow/psysh/issues",
                 "source": "https://github.com/bobthecow/psysh/tree/main"
             },
+<<<<<<< HEAD
             "time": "2024-09-29T21:42:50+00:00"
+=======
+            "time": "2024-09-26T12:33:34+00:00"
+>>>>>>> 7f8152e5f2d7123a2eb440647058be7def760ceb
         },
         {
             "name": "ralouphie/getallheaders",
@@ -4560,12 +4592,21 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
+<<<<<<< HEAD
                 "reference": "7f74336d8f49659ea46dea8772bea45011d9d80f"
             },
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/symfony/console/zipball/7f74336d8f49659ea46dea8772bea45011d9d80f",
                 "reference": "7f74336d8f49659ea46dea8772bea45011d9d80f",
+=======
+                "reference": "97987da6a80fdb9001a95747c12784de9631dd05"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/console/zipball/97987da6a80fdb9001a95747c12784de9631dd05",
+                "reference": "97987da6a80fdb9001a95747c12784de9631dd05",
+>>>>>>> 7f8152e5f2d7123a2eb440647058be7def760ceb
                 "shasum": ""
             },
             "require": {
@@ -4646,7 +4687,11 @@
                     "type": "tidelift"
                 }
             ],
+<<<<<<< HEAD
             "time": "2024-09-28T12:21:04+00:00"
+=======
+            "time": "2024-09-25T14:18:03+00:00"
+>>>>>>> 7f8152e5f2d7123a2eb440647058be7def760ceb
         },
         {
             "name": "symfony/css-selector",

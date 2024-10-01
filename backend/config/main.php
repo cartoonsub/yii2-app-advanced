@@ -14,8 +14,14 @@ return [
     'modules' => [],
     'components' => [
         'request' => [
-            'csrfParam' => '_csrf-backend',
+            'parsers' => [
+                'application/json' => 'yii\web\JsonParser',
+            ]
         ],
+        // 'request' => [
+        //     'csrfParam' => '_csrf-backend',
+            
+        // ],
         'user' => [
             'identityClass' => 'common\models\User',
             'enableAutoLogin' => true,

@@ -42,104 +42,17 @@ class LoanAplicationController extends ActiveController
     // http://localhost:21080/index.php/loan-aplication/requests?user_id=1&amount=3000&term=30
     public function actionRequests()
     {
-        $request = Yii::$app->request->post();
-        if (empty($request)) {
+        $Model = new LoanAplication();
+        $Model->load(Yii::$app->request->post(), '');
+        if ($Model->validate() === false) {
             Yii::$app->response->statusCode = 400;
             return [
                 'result' => false,
+                'errors' => $Model->errors,
             ];
         }
 
-        $loanRequest = new LoanAplication();
-        $loanRequest->user_id = $request['user_id'];
-        $loanRequest->amount = $request['amount'];
-        $loanRequest->term = $request['term'];
-
-        if ($this->checkUser($loanRequest->user_id) === false) {
-            Yii::$app->response->statusCode = 400;
-            return [
-                'allUsers' => User::find()->all(),
-                'message' => 'User not found',
-                'result' => false,
-            ];
-        }
-
-        if ($this->checkAproved($loanRequest) === false) {
-            Yii::$app->response->statusCode = 400;
-            return [
-                'message' => 'User has approved request',
-                'result' => false,
-            ];
-        }
-
-        if ($this->checkDuplicate($loanRequest) === false) {
-            Yii::$app->response->statusCode = 400;
-            return [
-                'message' => 'Duplicate request',
-                'result' => false,
-            ];
-        }
-
-        if ($loanRequest->save()) {
-            return [
-                'result' => true,
-                'id' => $loanRequest->id,
-            ];
-        } else {
-            return [
-                'result' => false,
-            ];
-        }
-    }
-
-    private function checkUser(int $user_id): bool
-    {
-        $user = User::findOne($user_id);
-        if (empty($user)) {
-            $newUser = new User();
-            $newUser->username = 'other User';
-            $newUser->email = 'adminO@admin.com';
-            $newUser->auth_key = 'auth_keyO';
-            $newUser->password_hash = 'password_hashO';
-            $newUser->password_reset_token = 'password_reset_tokenO';
-            $newUser->save();
-
-            return false;
-        }
-
-        return true;
-    }
-
-    private function checkAproved(LoanAplication $loanRequest): bool
-    {
-        $approved = LoanAplication::find()
-            ->where([
-                'user_id' => $loanRequest->user_id,
-                'status' => StatusEnum::APPROVED->value,
-            ])
-            ->one();
-
-        if (empty($approved)) {
-            return true;
-        }
-
-        return false;
-    }
-
-    private function checkDuplicate(LoanAplication $loanRequest): bool
-    {
-        $duplicate = LoanAplication::find()
-            ->where([
-                'user_id' => $loanRequest->user_id,
-                'amount' => $loanRequest->amount,
-                'term' => $loanRequest->term,
-            ])
-            ->one();
-
-        if (empty($duplicate)) {
-            return true;
-        }
-
-        return false;
+        $request = (array)Yii::$app->request->post();
+        return $this->requestProcessing($request);
     }
 }
